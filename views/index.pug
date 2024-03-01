@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Contact Manager
+
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
+    link(href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap', rel='stylesheet')
+
+    link(rel='stylesheet', href='/styles.css')
+  body
+    header
+      a(href='/contacts')
+        h1 Contact Manager
+
+    section#sidebar
+      include sidebar.pug
+
+    main#content
+      case action
+        when 'show'
+          include contact.pug
+        when 'new'
+          include form.pug
+        when 'edit'
+          include form.pug
+        default
+          p Select a contact
+
+    script(src='https://unpkg.com/htmx.org@1.9.4')

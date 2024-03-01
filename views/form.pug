@@ -1,0 +1,22 @@
+- isEditing = () => !(Object.keys(contact).length === 0);
+
+h2=isEditing() ? "Edit Contact" : "New Contact"
+
+form(
+  action=isEditing() ? `/update/${contact.id}?_method=PUT` : '/contacts',
+  method='POST',
+
+  hx-post=isEditing() ? false : '/contacts',
+  hx-put=isEditing() ? `/update/${contact.id}` : false,
+  hx-target='section#sidebar',
+  hx-on::after-request='this.reset()',
+  hx-push-url=isEditing() ? `/contacts/${contact.id}` : false
+)
+  label(for='name') Name:
+  input#name(type='text', name='name', required, value=contact.name)
+
+  label(for='email') Email:
+  input#email(type='email', name='email', required, value=contact.email)
+
+  div.actions
+    button(type='submit') Submit

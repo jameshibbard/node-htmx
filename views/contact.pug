@@ -1,0 +1,21 @@
+h2 #{contact.name}
+
+p #[strong Name:] #{contact.name}
+p #[strong Email:] #{contact.email}
+
+div.actions
+  form(method='POST', action=`/delete/${contact.id}?_method=DELETE`)
+    button(
+      type='submit',
+      hx-delete=`/delete/${contact.id}`,
+      hx-target='#sidebar',
+      hx-push-url='/contacts'
+      class='link'
+    ) Delete Contact
+
+  a(
+    href=`/contacts/${contact.id}/edit`,
+    hx-get=`/contacts/${contact.id}/edit`,
+    hx-push-url='true',
+    hx-target='#content'
+  ) Edit Contact

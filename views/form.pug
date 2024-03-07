@@ -8,9 +8,9 @@ form(
 
   hx-post=isEditing() ? false : '/contacts',
   hx-put=isEditing() ? `/update/${contact.id}` : false,
-  hx-target='section#sidebar',
-  hx-on::after-request='this.reset()',
+  hx-target='#sidebar',
   hx-push-url=isEditing() ? `/contacts/${contact.id}` : false
+  hx-on::after-request='if(event.detail.successful) this.reset()',
 )
   label(for='name') Name:
   input#name(type='text', name='name', required, value=contact.name)

@@ -16,12 +16,12 @@ const contacts = [
 ];
 
 // GET /contacts
-router.get('/contacts', async (req, res) => {
+router.get('/contacts', (req, res) => {
   res.render('index', { action: '', contacts, contact: {} });
 });
 
 // GET /contacts/new
-router.get('/contacts/new', async (req, res) => {
+router.get('/contacts/new', (req, res) => {
   if (req.headers['hx-request']) {
     res.render('form', { contact: {} });
   } else {
@@ -30,7 +30,7 @@ router.get('/contacts/new', async (req, res) => {
 });
 
 // GET /contacts/1
-router.get('/contacts/:id', async (req, res) => {
+router.get('/contacts/:id', (req, res) => {
   const { id } = req.params;
   const contact = contacts.find((c) => c.id === Number(id));
 
@@ -42,7 +42,7 @@ router.get('/contacts/:id', async (req, res) => {
 });
 
 // GET /contacts/1/edit
-router.get('/contacts/:id/edit', async (req, res) => {
+router.get('/contacts/:id/edit', (req, res) => {
   const { id } = req.params;
   const contact = contacts.find((c) => c.id === Number(id));
 
@@ -54,7 +54,7 @@ router.get('/contacts/:id/edit', async (req, res) => {
 });
 
 // POST /contacts
-router.post('/contacts', async (req, res) => {
+router.post('/contacts', (req, res) => {
   const newContact = {
     id: contacts.length + 1,
     name: req.body.name,
@@ -66,7 +66,9 @@ router.post('/contacts', async (req, res) => {
   if (req.headers['hx-request']) {
     res.render('sidebar', { contacts }, (err, sidebarHtml) => {
       const html = `
-        <main id="content" hx-swap-oob="afterbegin"><p class="flash">Contact was successfully added!</p></main>
+        <main id="content" hx-swap-oob="afterbegin">
+          <p class="flash">Contact was successfully added!</p>
+        </main>
         ${sidebarHtml}
       `;
       res.send(html);
@@ -77,7 +79,7 @@ router.post('/contacts', async (req, res) => {
 });
 
 // PUT /contacts/1
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', (req, res) => {
   const { id } = req.params;
 
   const newContact = {
@@ -110,7 +112,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 // DELETE /contacts/1
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
   const index = contacts.findIndex((c) => c.id === Number(id));
 
@@ -118,7 +120,9 @@ router.delete('/delete/:id', async (req, res) => {
   if (req.headers['hx-request']) {
     res.render('sidebar', { contacts }, (err, sidebarHtml) => {
       const html = `
-        <main id="content" hx-swap-oob="true"><p class="flash">Contact was successfully deleted!</p></main>
+        <main id="content" hx-swap-oob="true">
+          <p class="flash">Contact was successfully deleted!</p>
+        </main>
         ${sidebarHtml}
       `;
       res.send(html);
